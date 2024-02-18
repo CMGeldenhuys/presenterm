@@ -23,6 +23,7 @@ impl CodeExecuter {
         }
         match &code.language {
             CodeLanguage::Shell(interpreter) => Self::execute_shell(interpreter, &code.contents),
+            CodeLanguage::Python => Self::execute_shell("python3", &code.contents),
             _ => Err(CodeExecuteError::UnsupportedExecution),
         }
     }

@@ -244,7 +244,7 @@ pub(crate) enum CodeLanguage {
 
 impl CodeLanguage {
     pub(crate) fn supports_execution(&self) -> bool {
-        matches!(self, Self::Shell(_))
+        matches!(self, Self::Shell(_) | Self::Python)
     }
 
     pub(crate) fn supports_auto_render(&self) -> bool {
