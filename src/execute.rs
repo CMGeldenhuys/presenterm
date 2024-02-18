@@ -174,6 +174,26 @@ echo 'bye'"
     }
 
     #[test]
+    fn python_code_execution() {
+        let contents = r"print('hello world')".into();
+        let code = Code {
+            contents,
+            language: CodeLanguage::Python,
+            attributes: CodeAttributes { execute: true, ..Default::default() },
+        };
+        let handle = CodeExecuter::execute(&code).expect("execution failed");
+        let state = loop {
+            let state = handle.state();
+            if state.status.is_finished() {
+                break state;
+            }
+        };
+
+        let expected_lines = vec!["hello world"];
+        assert_eq!(state.output, expected_lines);
+    }
+
+    #[test]
     fn non_executable_code_cant_be_executed() {
         let contents = String::new();
         let code = Code {
